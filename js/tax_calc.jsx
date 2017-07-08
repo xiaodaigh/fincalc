@@ -10,35 +10,88 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+// var taxTblMap = new Map();
+
+// // setting the values
+// taxTblMap.set(2016, [
+// 	[18200, 37000, 87000, 180000],
+// 	[0, 0.19, 0.325, 0.37, 0.45],
+// 	[0, 0, 3572, 19822, 54232]
+// 	] );
+
 //calculate tax
-function income_tax(sal) {
-	if (sal <= 18200) {
-		return 0
-	} else if (sal <= 37000) {
-		return (sal - 18200)*0.19
-	} else if (sal <= 87000) {
-		return (sal - 37000)*0.325 + 3572
-	} else if (sal <= 180000) {
-		return (sal - 87000)*0.37 + 19822
-	} else if (sal > 180000) {
-		return (sal - 180000)*0.45 + 54232
-	}
+function incomeTax(income, incomeBracket = [18200, 37000, 87000, 180000, Infinity], 
+	baseTax = [0, 0, 3572, 19822, 54232], marginalRate=[0, 0.19, 0.325, 0.37, 0.45]) {
+	var bracket = incomeBracket.findIndex(
+		function(incomeThreshold) { return this <= incomeThreshold}, 
+		income);
+	if (bracket == 0) return 0
+	return baseTax[bracket] + marginalRate[bracket]*(income - incomeBracket[bracket-1])
 }
 
+// incomeBracket = [18200, 37000, 87000, 180000, Infinity]
+// income = 180000
+//incomeTax(30000, incomeBracket, [0, 0, 3572, 19822, 54232], [0, 0.19, 0.325, 0.37, 0.45])
+
 // calculate salary given tax
-function tax_to_salary(tax) {
-	if (sal <= 18200) {
-		return 0
-	} else if (sal <= 37000) {
-		return (sal - 18200)*0.19
-	} else if (sal <= 87000) {
-		return (sal - 37000)*0.325 + 3572
-	} else if (sal <= 180000) {
-		return (sal - 87000)*0.37 + 19822
-	} else if (sal > 180000) {
-		return (sal - 180000)*0.45 + 54232
-	}
+function taxToSalary(tax, incomeBracket = [18200, 37000, 87000, 180000, Infinity], 
+	baseTax = [0, 0, 3572, 19822, 54232], marginalRate=[0, 0.19, 0.325, 0.37, 0.45]) {
+	if( tax <= 0) return 0
+
+	var taxBracket = []
+
+	var i = baseTax.findIndex(
+		function(taxThreshold) {
+			return this <= taxThreshold
+		} , tax )
+	
+	if (i == 0) return 0
+	else if (i == -1) i = incomeBracket.length
+
+	var marginalIncome = (tax - baseTax[i-1])/marginalRate[i - 1]
+
+	// console.log(baseTax[i-1], marginalRate[i - 1], incomeBracket[i-1])
+	return incomeBracket[i - 2] + marginalIncome
 }
+
+
+// converts postTax income to salary
+function postTaxToSalary(postTax, incomeBracket = [18200, 37000, 87000, 180000, Infinity], 
+	baseTax = [0, 0, 3572, 19822, 54232], marginalRate=[0, 0.19, 0.325, 0.37, 0.45]) {
+
+	// build a postTax bracket
+	var postTaxBracket = []
+	incomeBracket.forEach(function(inc, i, incArr) {
+		var prevIncThreshold = 0
+		if(i > 0) prevIncThreshold = incArr[i-1]
+
+		// if Infinity is in the incomeBracket then postTaxBracket should be shorter by 1 in length
+		if(isFinite(inc)) {
+			postTaxBracket.push(inc - baseTax[i] - (inc - prevIncThreshold)*marginalRate[i])
+		}
+		
+	})
+
+	var i = postTaxBracket.findIndex(function(postTaxThreshold) {
+		return(this <= postTaxThreshold)
+	}, postTax)
+
+	//console.log(postTaxBracket)
+	//console.log(i)
+
+	if(i == -1) i = incomeBracket.length-1
+
+	var incomeThreshold =  i == 0 ? 0 : incomeBracket[i-1]
+		
+	//console.log([baseTax[i], incomeThreshold,marginalRate[i]])
+
+	return (postTax + baseTax[i] - incomeThreshold*marginalRate[i])/(1-marginalRate[i])
+
+}
+
+// taxToSalary(20000, 
+// 	incomeBracket, [0, 0, 3572, 19822, 54232],
+// 	 [0, 0.19, 0.325, 0.37, 0.45])
 
 //React JS calculator class
 class TaxCalculator extends React.Component {
@@ -50,21 +103,25 @@ class TaxCalculator extends React.Component {
 
     this.state = {
     	salary: props.salary, 
-    	tax : income_tax(props.salary), 
+    	tax : incomeTax(props.salary), 
     	medicareLevy:props.salary*0.025, 
     	superannuation : props.salary * props.super_pct/100, 
     	super_pct : props.super_pct, 
-    	postTax : props.salary  - income_tax(props.salary)
+    	postTax : props.salary  - incomeTax(props.salary)
     	};
   }
 
   handleSalaryChange(e) {
   	var etv = eval(e.target.value)
     if (isFinite(etv)) {
+    	var new_tax = incomeTax(etv)
+    	var new_post_tax = etv - new_tax
     	this.setState({
 	    	salary : e.target.value, 
-	    	tax: income_tax(etv), 
-	    	medicareLevy : etv * 0.025
+	    	tax: Math.round(new_tax), 
+	    	postTax: Math.round(new_post_tax),
+	    	medicareLevy : etv * 0.025,
+	    	superannuation : etv * this.state.super_pct/100
     	});
     } else {
     	this.setState({
@@ -77,14 +134,30 @@ class TaxCalculator extends React.Component {
   handleTaxChange(e) {
   	var etv = eval(e.target.value)
   	if (isFinite(etv)) {
-  		this.setState({salary : etv/0.3, tax: etv, medicareLevy : this.state.salary * 0.025});
+  		var new_sal = taxToSalary(etv)
+    	var new_post_tax = new_sal - etv
+  		this.setState({salary : Math.round(new_sal), tax: e.target.value, 
+  			postTax : Math.round(new_post_tax),
+  			medicareLevy : this.state.salary * 0.025,
+  			superannuation : new_sal * this.state.super_pct/100});
   	} else {
   		this.setState({tax: e.target.value});
   	}
   }
 
   handlePostTaxChange(e) {
-  	
+  	var etv = eval(e.target.value)
+  	if (isFinite(etv)) {
+  		var new_sal = postTaxToSalary(etv);
+  		var new_tax = incomeTax(new_sal)
+  		this.setState({salary : Math.round(new_sal), tax: Math.round(new_tax), 
+  			postTax:e.target.value, 
+  			medicareLevy : this.state.salary * 0.025,
+  			superannuation : new_sal * this.state.super_pct/100
+  		});
+  	} else {
+  		this.setState({postTax: e.target.value});
+  	}
   }
 
   render() {
@@ -130,7 +203,7 @@ ReactDOM.render(
 	<h2> Calculation 1</h2>
 	<TaxCalculator salary = "80000" super_pct = "9.5"/> 
 
-	<h2>Calculation 2 for comparison</h2>
+	<h2>Calculation 2</h2>
 	<TaxCalculator  salary = "70000" super_pct = "9.5"/>
 	</div>,
 		document.getElementById('root')
