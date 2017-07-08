@@ -72,6 +72,8 @@ function postTaxToSalary(postTax, incomeBracket = [18200, 37000, 87000, 180000, 
 		
 	})
 
+	postTaxBracket.push(Infinity)
+
 	var i = postTaxBracket.findIndex(function(postTaxThreshold) {
 		return(this <= postTaxThreshold)
 	}, postTax)
@@ -79,7 +81,8 @@ function postTaxToSalary(postTax, incomeBracket = [18200, 37000, 87000, 180000, 
 	//console.log(postTaxBracket)
 	//console.log(i)
 
-	if(i == -1) i = incomeBracket.length-1
+	///if(i == -1) i = incomeBracket.length-1
+
 
 	var incomeThreshold =  i == 0 ? 0 : incomeBracket[i-1]
 		
@@ -107,7 +110,7 @@ class TaxCalculator extends React.Component {
     	medicareLevy:props.salary*0.025, 
     	superannuation : props.salary * props.super_pct/100, 
     	super_pct : props.super_pct, 
-    	postTax : props.salary  - incomeTax(props.salary)
+    	postTax : props.salary  - incomeTax(props.salary) - props.salary*0.025
     	};
   }
 
@@ -116,11 +119,12 @@ class TaxCalculator extends React.Component {
     if (isFinite(etv)) {
     	var new_tax = incomeTax(etv)
     	var new_post_tax = etv - new_tax
+    	var new_medicareLevy = etv * 0.025
     	this.setState({
 	    	salary : e.target.value, 
 	    	tax: Math.round(new_tax), 
-	    	postTax: Math.round(new_post_tax),
-	    	medicareLevy : etv * 0.025,
+	    	postTax: Math.round(new_post_tax - new_medicareLevy),
+	    	medicareLevy : new_medicareLevy,
 	    	superannuation : etv * this.state.super_pct/100
     	});
     } else {
@@ -136,9 +140,10 @@ class TaxCalculator extends React.Component {
   	if (isFinite(etv)) {
   		var new_sal = taxToSalary(etv)
     	var new_post_tax = new_sal - etv
+    	var new_medicareLevy = new_sal * 0.025
   		this.setState({salary : Math.round(new_sal), tax: e.target.value, 
   			postTax : Math.round(new_post_tax),
-  			medicareLevy : this.state.salary * 0.025,
+  			medicareLevy : new_medicareLevy,
   			superannuation : new_sal * this.state.super_pct/100});
   	} else {
   		this.setState({tax: e.target.value});
@@ -150,9 +155,10 @@ class TaxCalculator extends React.Component {
   	if (isFinite(etv)) {
   		var new_sal = postTaxToSalary(etv);
   		var new_tax = incomeTax(new_sal)
+		var new_medicareLevy = new_sal * 0.025	
   		this.setState({salary : Math.round(new_sal), tax: Math.round(new_tax), 
   			postTax:e.target.value, 
-  			medicareLevy : this.state.salary * 0.025,
+  			medicareLevy : new_medicareLevy,
   			superannuation : new_sal * this.state.super_pct/100
   		});
   	} else {
@@ -170,40 +176,58 @@ class TaxCalculator extends React.Component {
 
 
     return (
-     <div className = "container example-grid docs-example"> 
+     <form> 
      	<div className="row">
-		      	<div className="three columns">
-		      		<label htmlFor="salaryInput">Salary ${Math.round(eval(salary)).toLocaleString()} </label>
+			<div className="two columns">
+				<label for="frequency">Frequency</label>
+				<select className = "u-full-width" id="frequency">
+					<option value="Annual">Annual</option>
+					<option value="Monthly">Monthly</option>
+					<option value="Fornightly">Fornightly</option>
+					<option value="Weekly">Weekly</option>
+					<option value="Day Rate">Day Rate</option>
+				</select>		
+			</div>
+			<div className="two columns">
+				<label htmlFor="salaryInput">Salary ${Math.round(eval(salary)).toLocaleString()} </label>
 				<input className = "u-full-width" placeholder={Math.round(salary)} value = {salary} id="salaryInput" onChange = {this.handleSalaryChange}/>
-		      	</div>
-		      	<div className="three columns">
-		      		<label htmlFor="taxInput">Tax ${Math.round(eval(tax)).toLocaleString()} </label>
+			</div>
+	
+	      	<div className="two columns">
+	      		<label htmlFor="taxInput">Tax ${Math.round(eval(tax)).toLocaleString()} </label>
 				<input className = "u-full-width" placeholder={Math.round(tax)} value = {tax} id="taxInput" onChange = {this.handleTaxChange}/>
 			</div>
-			<div className="three columns">
-		      		<label htmlFor="afterTaxInput">Post tax ${Math.round(eval(postTax)).toLocaleString()} </label>
-				<input className = "u-full-width" placeholder={Math.round(postTax)} value = {postTax} id="afterTaxInput" onChange = {this.handlePostTaxChange}/>
-		      	</div>
-		      	<div className="two columns">
-		      		<label htmlFor="medicareLevy_show">Medicare Levy </label>
-		      		<div id = "medicareLevy_show">{Math.round(medicareLevy).toLocaleString()}</div>
-		      	</div>
 			<div className="two columns">
-		      		<label htmlFor="superannuation_show">Superannuation ${superannuation.toLocaleString()} @ {super_pct}% </label>
-		      		<div id = "superannuation_show">{Math.round(superannuation)}</div>
-		      	</div>
+	      		<label htmlFor="afterTaxInput">Post tax ${Math.round(eval(postTax)).toLocaleString()} </label>
+				<input className = "u-full-width" placeholder={Math.round(postTax)} value = {postTax} id="afterTaxInput" onChange = {this.handlePostTaxChange}/>
+	      	</div>
+	      	<div className="two columns">
+	      		<label htmlFor="medicareLevy_show">Medicare Levy </label>
+	      		<div id = "medicareLevy_show">{Math.round(medicareLevy).toLocaleString()}</div>
+	      	</div>
+			<div className="two columns">
+	      		<label htmlFor="superannuation_show">Superannuation ${superannuation.toLocaleString()} @ {super_pct}% </label>
+	      		<div id = "superannuation_show">{Math.round(superannuation)}</div>
+	      	</div>
 		</div>
-	</div>
+		<div className="row">
+
+		</div>
+	</form>
       );
 		}
 }
 
 ReactDOM.render(
 	<div>
-	<h2> Calculation 1</h2>
+	<div class = "row">
+		<h3> Calculation 1</h3>
+	</div>
 	<TaxCalculator salary = "80000" super_pct = "9.5"/> 
 
-	<h2>Calculation 2</h2>
+	<div class = "row">
+		<h3> Calculation 2</h3>
+	</div>
 	<TaxCalculator  salary = "70000" super_pct = "9.5"/>
 	</div>,
 		document.getElementById('root')
