@@ -234,7 +234,7 @@ class TaxCalculator extends React.Component {
   			postTaxInput : e.target.value
   		});
   	} else {
-  		this.setState({postTax: e.target.value});
+  		this.setState({postTaxInput: e.target.value});
   	}
   }
 
