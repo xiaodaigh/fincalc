@@ -25,8 +25,8 @@
     <link rel="icon" type="Skeleton-2.0.4/image/png" href="Skeleton-2.0.4/images/favicon.png">
     <!-- React
 	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 	<!--     <script src="js/react.js"></script>
     <script src="js/react-dom.js"></script>
@@ -40,7 +40,102 @@
     <div id="root"></div>
 
     <h4>How is your tax calculated?</h4>
-    Australia's personal taxation systems is so called "progressive" system similiar to US, UK, Canada. Income tax are calculated based on brackets and you have to pay for 
+    As an individual the amount of tax you paid can be described as
+    <br/>
+    <div class="row">
+	    <div class="offset-by-two eight columns">
+	    	Total Tax = Income Tax + Medicare Levy
+	    </div>
+    </div>
+	<br/>
+	Medicare Levy is simple in that it is simply 2.5% of your Taxable Income unless your income is below a certain threshold in which cases you dont have to pay a Medicare Levy.
+
+    Income tax on the other hands follows a so called "progressive" taxation system. In a progressive system income tax are calculated based on brackets and income within each bracket is taxed at a different rate. Of course the higher the income the higher the tax rate, hence the name progressive. The rate at which each bracket is charged at is called the marginal rate. 
+
+    <br/>
+    <div class="row">
+	    <div class="offset-by-two eight columns">
+	    	Income Tax = Total Previous Bracket Tax + (Taxable Income - Last Bracket Threshold) * Marginal Rate
+	    </div>
+    </div>
+	<br/>
+
+    The below the Australian income tax rates for the financial 2017/2018 (i.e. Jul 2017 to Jun 2018).
+
+    <div class = "container">
+	    <div class = "row">
+			<table class="u-full-width">
+			  <thead>
+			    <tr>
+			      <th>Income Tax Bracket</th>
+			      <th>Marginal rate</th>
+			      <th>Total Previous Bracket Tax</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td>$0 - $18,000</td>
+			      <td>0%</td>
+			      <td>NA</td>
+			    </tr>
+			    <tr>
+			      <td>$18,001 - $37,000</td>
+			      <td>19%</td>
+			      <td>$3,572</td>
+			    </tr>
+			    <tr>
+			      <td>$37,001 - $87,000</td>
+			      <td>32.5%</td>
+			      <td>$19,822</td>
+			    </tr>
+			    <tr1>
+			      <td>$87,001 - $180,000</td>
+			      <td>37%</td>
+			      <td>$19,822</td>
+			    </tr>
+			    <tr1>
+			      <td>$180,001 - Infinity</td>
+			      <td>45%</td>
+			      <td>$54,232</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+
+	<h4>Tax & Pay Calculation Explained via an example</h4>
+
+	Suppose your taxable income is $78,000. You fall into the third bracket, your last bracket threshold is $37,000, and your marginal rate is 32.5% i.e. every dollar that you earn above $37,000 is taxed at 32.5%. But how much tax do you pay for your earnings below $37,000? That is the "Total Previous Bracket Tax" which is $3,572. Bringing everything togehter and your income tax is calculated as
+
+	<br/>
+    <div class="row">
+	    <div class="offset-by-two eight columns">
+	    	Income Tax = $16,897 =  $3,572 + ($78,000 - $37,000) * 32.5%
+	    </div>
+    </div>
+	<br/>
+
+	To work out your take home pay you would need to 
+
+	<br/>
+	<div class="row">
+	    <div class="offset-by-two eight columns">
+	    	Take Home Pay = Taxable Income - Income Tax - Medicare Levy
+	    </div>
+    </div>
+	<br/>
+
+	therefore 
+
+	<br/>
+	<div class="row">
+	    <div class="offset-by-two eight columns">
+	    	Take Home Pay = $59,543 = $78,000 - $16,897 - $78,000 * 2.5%
+	    </div>
+    </div>
+	<br/>
+
+	To convert your take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely.
 
     © 2017 AnalytixWare Pty Ltd
 
