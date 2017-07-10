@@ -188,8 +188,9 @@ class TaxCalculator extends React.Component {
     	var newMedicareLevy = medicareLevy(newSalary)
     	var newPostTax = newSalary - newTax - newMedicareLevy
 
-	  	var newTaxInput = Math.round(unAnnualiseSalary(newTax, frequency))
-	  	var newPostTaxInput = newSalaryInput - newTaxInput - newMedicareLevy
+	  	var newTaxInput = Math.round(unAnnualiseSalary(newTax, this.state.frequency))
+	  	var newMedicareLevyInput = unAnnualiseSalary(newMedicareLevy,this.state.frequency)
+	  	var newPostTaxInput = newSalaryInput - newTaxInput - newMedicareLevyInput
 	    var newSuper =  Math.round(newSalary * this.state.super_pct/100)
 
     	this.setState({
@@ -197,11 +198,11 @@ class TaxCalculator extends React.Component {
 	    	salaryInput: e.target.value,
 	    	tax: Math.round(newTax), 
 	    	taxInput:newTaxInput,
-	    	postTax: Math.round(newPostTax - newMedicareLevy),
-	    	postTaxInput:newPostTax,
+	    	postTax: Math.round(newPostTax),
+	    	postTaxInput:newPostTaxInput,
 	    	medicareLevy : Math.round(newMedicareLevy),
 	    	superannuation :newSuper,
-	    	medicareLevyInput : unAnnualiseSalary(newMedicareLevy,this.state.frequency),
+	    	medicareLevyInput : newMedicareLevyInput,
 	    	superannuationInput: unAnnualiseSalary(newSuper,this.state.frequency)
     	});
     } else {
@@ -218,7 +219,7 @@ class TaxCalculator extends React.Component {
   	catch(err) {}
   
   	if (isFinite(newTaxInput)) {
-  		var newTax = annualiseSalary(newTaxInput, this.state.newTaxInput)
+  		var newTax = annualiseSalary(newTaxInput, this.state.frequency)
   		var newSalary = taxToSalary(newTax)
     	var newMedicareLevy = newSalary * 0.02
     	var newPostTax = newSalary - newTax - newMedicareLevy
@@ -227,13 +228,14 @@ class TaxCalculator extends React.Component {
 
   		this.setState({
   			salary : Math.round(newSalary), 
-  			salaryInput : Math.round(newSalary), 
+  			salaryInput : Math.round(unAnnualiseSalary(newSalary, this.state.frequency)), 
   			tax : Math.round(newTax),
   			taxInput: e.target.value, 
   			postTax : Math.round(newPostTax),
+  			postTaxInput : Math.round(unAnnualiseSalary(newPostTax, this.state.frequency)),
   			medicareLevy : Math.round(newMedicareLevy),
   			superannuation : newSuper,
-  			medicareLevyInput : unAnnualiseSalary(medicareLevy,this.state.frequency),
+  			medicareLevyInput : unAnnualiseSalary(newMedicareLevy,this.state.frequency),
 	    	superannuationInput: unAnnualiseSalary(newSuper, this.state.frequency)
   		});
   	} else {
@@ -259,13 +261,13 @@ class TaxCalculator extends React.Component {
   			salary : Math.round(newSalary),
   			tax: Math.round(newTax), 
   			postTax:e.target.value, 
-  			medicareLevy : newMedicareLevy,
-  			superannuation : newSalary * this.state.super_pct/100,
-  			salaryInput : unAnnualiseSalary(newSalary, this.state.frequency),
-  			taxInput : unAnnualiseSalary(newTax, this.state.frequency),
+  			medicareLevy : Math.round(newMedicareLevy),
+  			superannuation : Math.round(newSalary * this.state.super_pct/100),
+  			salaryInput : Math.round(unAnnualiseSalary(newSalary, this.state.frequency)),
+  			taxInput : Math.round(unAnnualiseSalary(newTax, this.state.frequency)),
   			postTaxInput : e.target.value,
-  			medicareLevyInput : unAnnualiseSalary(medicareLevy,this.state.frequency),
-	    	superannuationInput:  unAnnualiseSalary(newSuper, this.state.frequency)
+  			medicareLevyInput : Math.round(unAnnualiseSalary(newMedicareLevy,this.state.frequency)),
+	    	superannuationInput:  Math.round(unAnnualiseSalary(newSuper, this.state.frequency))
   		});
   	} else {
   		this.setState({postTaxInput: e.target.value});
