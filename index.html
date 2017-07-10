@@ -29,13 +29,14 @@
 </head>
 
 <body>
-	<h5 class = "row">Australian Simple Tax & Pay Calculator</h5>
-	This fast and acurate calculator helps you work out how much you will get paid and how much tax you will pay. It is however not a comprehensive calculator and you are encourage to visit ato.gov.au for more infomration.
 
-    <div id="root"></div>
+	<h4 class = "row">Australian Simple Tax & Pay Calculator</h4>
+	This fast and acurate calculator helps you work out how much you will get paid and how much tax you will pay. It is however not a comprehensive calculator and you may want to visit the Australian Tax Office website (ato.gov.au) for more infomration.
+
+    <div id="root"></div><script type="text/babel" src = "js/tax_calc.jsx"></script>
 
     <h4>How is your tax calculated?</h4>
-    As an individual the amount of tax you paid can be described as
+    As an individual the amount of tax you pay can be summarised with this equation
     <br/>
     <div class="row">
 	    <div class="offset-by-two eight columns">
@@ -43,9 +44,9 @@
 	    </div>
     </div>
 	<br/>
-	Medicare Levy is simple in that it is simply 2.5% of your Taxable Income unless your income is below a certain threshold in which cases you dont have to pay a Medicare Levy.
+	Medicare Levy is simply 2% of your Taxable Income unless your income is below a certain threshold (for details visit <a href="https://www.ato.gov.au/General/New-legislation/In-detail/Direct-taxes/Income-tax-for-individuals/Increasing-the-Medicare-Levy-low-income-thresholds/">this link</a>) in which case you don't have to pay a Medicare Levy.
 
-    Income tax on the other hands follows a so called "progressive" taxation system. In a progressive system income tax are calculated based on brackets and income within each bracket is taxed at a different rate. Of course the higher the income the higher the tax rate, hence the name progressive. The rate at which each bracket is charged at is called the marginal rate. 
+    Income tax on the other hands follows a so called "progressive" system. In a progressive system income tax are calculated based on brackets and income within each bracket is taxed at a different rate. Of course the higher the income the higher the tax rate, hence the name progressive. The rate at which each bracket is charged at is called the marginal rate. 
 
     <br/>
     <div class="row">
@@ -55,7 +56,7 @@
     </div>
 	<br/>
 
-    The below the Australian income tax rates for the financial 2017/2018 (i.e. Jul 2017 to Jun 2018).
+    The below is the Australian income tax rates for the financial year 2017/2018 (i.e. Jul 2017 to Jun 2018).
 
     <div class = "container">
 	    <div class = "row">
@@ -76,12 +77,12 @@
 			    <tr>
 			      <td>$18,001 - $37,000</td>
 			      <td>19%</td>
-			      <td>$3,572</td>
+			      <td>$0</td>
 			    </tr>
 			    <tr>
 			      <td>$37,001 - $87,000</td>
 			      <td>32.5%</td>
-			      <td>$19,822</td>
+			      <td>$3,572</td>
 			    </tr>
 			    <tr1>
 			      <td>$87,001 - $180,000</td>
@@ -100,7 +101,7 @@
 
 	<h4>Tax & Pay Calculation Explained via an example</h4>
 
-	Suppose your taxable income is $78,000. You fall into the third bracket, your last bracket threshold is $37,000, and your marginal rate is 32.5% i.e. every dollar that you earn above $37,000 is taxed at 32.5%. But how much tax do you pay for your earnings below $37,000? That is the "Total Previous Bracket Tax" which is $3,572. Bringing everything togehter and your income tax is calculated as
+	Consider someone with a taxable income of $78,000. Her income falls into the third bracket, the last bracket threshold is $37,000, and your marginal rate is 32.5% i.e. every dollar that you earn above $37,000 is taxed at 32.5%. But how much tax do you pay for her earnings below $37,000? That is the "Total Previous Bracket Tax" which is $3,572. Bringing everything togehter and your income tax is calculated as
 
 	<br/>
     <div class="row">
@@ -130,7 +131,9 @@
     </div>
 	<br/>
 
-	To convert your take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely.
+	To convert your take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely
+	<br/>
+	
 
     © 2017 AnalytixWare Pty Ltd
 
