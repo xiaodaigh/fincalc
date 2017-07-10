@@ -93,7 +93,7 @@ function unAnnualiseSalaryFactor(frequency) {
     case "Fornightly":
       mult = 1 / 26;break;
     case "Weekly":
-      mult = 1 / 50;break;
+      mult = 1 / 52;break;
     case "Daily":
       mult = 1 / 250;break;
     default:
@@ -177,8 +177,12 @@ class TaxCalculator extends React.Component {
   }
 
   handleSalaryInputChange(e) {
-    var newSalaryInput = eval(e.target.value);
-
+    try {
+      var newSalaryInput = eval(e.target.value);
+    } catch (err) {
+      //do nothing
+      //console.log(err)
+    }
     if (isFinite(newSalaryInput)) {
       var newSalary = annualiseSalary(newSalaryInput, this.state.frequency);
       var newTax = incomeTax(newSalary);
@@ -209,19 +213,21 @@ class TaxCalculator extends React.Component {
   }
 
   handleTaxInputChange(e) {
-    var newTaxInput = eval(e.target.value);
+    try {
+      var newTaxInput = eval(e.target.value);
+    } catch (err) {}
 
     if (isFinite(newTaxInput)) {
       var newTax = annualiseSalary(newTaxInput, this.state.newTaxInput);
-      var newSal = taxToSalary(newTax);
-      var newMedicareLevy = newSal * 0.02;
-      var newPostTax = newSal - newTax - newMedicareLevy;
+      var newSalary = taxToSalary(newTax);
+      var newMedicareLevy = newSalary * 0.02;
+      var newPostTax = newSalary - newTax - newMedicareLevy;
 
       var newSuper = Math.round(newSalary * this.state.super_pct / 100);
 
       this.setState({
-        salary: Math.round(newSal),
-        salaryInput: Math.round(newSal),
+        salary: Math.round(newSalary),
+        salaryInput: Math.round(newSalary),
         tax: Math.round(newTax),
         taxInput: e.target.value,
         postTax: Math.round(newPostTax),
@@ -236,13 +242,15 @@ class TaxCalculator extends React.Component {
   }
 
   handlePostTaxChange(e) {
-    var newPostTaxInput = eval(e.target.value);
+    try {
+      var newPostTaxInput = eval(e.target.value);
+    } catch (err) {}
 
     if (isFinite(newPostTaxInput)) {
       var newPostTax = annualiseSalary(newPostTaxInput, this.state.frequency);
       var newSalary = postTaxToSalary(newPostTax);
       var newTax = incomeTax(newSalary);
-      var newMedicareLevy = medicareLevy(salary);
+      var newMedicareLevy = medicareLevy(newSalary);
       var newSuper = Math.round(newSalary * this.state.super_pct / 100);
 
       this.setState({
@@ -401,20 +409,16 @@ ReactDOM.render(React.createElement(
     "div",
     { className: "row" },
     React.createElement(
-      "h3",
+      "h5",
       null,
       " Calculation 1"
     )
   ),
   React.createElement(TaxCalculator, { salary: "78000", super_pct: "9.5" }),
   React.createElement(
-    "div",
-    { className: "row" },
-    React.createElement(
-      "h3",
-      null,
-      " Calculation 2"
-    )
+    "h5",
+    null,
+    " Calculation 2"
   ),
   React.createElement(TaxCalculator, { salary: "65000", super_pct: "9.5" })
 ), document.getElementById('root'));
