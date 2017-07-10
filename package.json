@@ -1,0 +1,26 @@
+{
+  "name": "fincalc",
+  "version": "1.0.0",
+  "description": "Australian tax & pay calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "babel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaodaigh/fincalc.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Zhuo Jia Dai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiaodaigh/fincalc/issues"
+  },
+  "homepage": "https://github.com/xiaodaigh/fincalc#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1"
+  }
+}
