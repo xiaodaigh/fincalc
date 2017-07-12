@@ -21,6 +21,7 @@
   "homepage": "https://github.com/xiaodaigh/fincalc#readme",
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-plugin-transform-react-jsx": "^6.24.1"
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1"
   }
 }

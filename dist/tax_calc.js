@@ -1,4 +1,14 @@
-const singlesMedicareLevyThreshold1 = 21655;
+"use strict";
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var singlesMedicareLevyThreshold1 = 21655;
 
 // code to obtain the query from URL
 // taken from https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
@@ -22,7 +32,11 @@ function getParameterByName(name, url) {
 // 	] );
 
 //calculate tax
-function incomeTax(income, incomeBracket = [18200, 37000, 87000, 180000, Infinity], baseTax = [0, 0, 3572, 19822, 54232], marginalRate = [0, 0.19, 0.325, 0.37, 0.45]) {
+function incomeTax(income) {
+  var incomeBracket = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [18200, 37000, 87000, 180000, Infinity];
+  var baseTax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0, 3572, 19822, 54232];
+  var marginalRate = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0.19, 0.325, 0.37, 0.45];
+
   var bracket = incomeBracket.findIndex(function (incomeThreshold) {
     return this <= incomeThreshold;
   }, income);
@@ -35,7 +49,11 @@ function incomeTax(income, incomeBracket = [18200, 37000, 87000, 180000, Infinit
 // incomeTax(30000, incomeBracket, [0, 0, 3572, 19822, 54232], [0, 0.19, 0.325, 0.37, 0.45])
 
 // calculate salary given tax
-function taxToSalary(tax, incomeBracket = [18200, 37000, 87000, 180000, Infinity], baseTax = [0, 0, 3572, 19822, 54232], marginalRate = [0, 0.19, 0.325, 0.37, 0.45]) {
+function taxToSalary(tax) {
+  var incomeBracket = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [18200, 37000, 87000, 180000, Infinity];
+  var baseTax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0, 3572, 19822, 54232];
+  var marginalRate = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0.19, 0.325, 0.37, 0.45];
+
   if (tax <= 0) return 0;
 
   var taxBracket = [];
@@ -53,7 +71,11 @@ function taxToSalary(tax, incomeBracket = [18200, 37000, 87000, 180000, Infinity
 }
 
 // converts postTax income to salary
-function postTaxToSalary(postTax, incomeBracket = [18200, 37000, 87000, 180000, Infinity], baseTax = [0, 0, 3572, 19822, 54232], marginalRate = [0, 0.19, 0.325, 0.37, 0.45]) {
+function postTaxToSalary(postTax) {
+  var incomeBracket = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [18200, 37000, 87000, 180000, Infinity];
+  var baseTax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0, 3572, 19822, 54232];
+  var marginalRate = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0.19, 0.325, 0.37, 0.45];
+
 
   // build a postTax bracket
   var postTaxBracket = [];
@@ -127,21 +149,30 @@ function unAnnualiseSalary(annualSalary, frequency) {
   return annualSalary / annualiseSalaryFactor(frequency);
 }
 
-function medicareLevy(annualSalary, medicareLevyRate = 0.02, singlesMedicareLevyThreshold = singlesMedicareLevyThreshold1) {
+function medicareLevy(annualSalary) {
+  var medicareLevyRate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.02;
+  var singlesMedicareLevyThreshold = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : singlesMedicareLevyThreshold1;
+
   return annualSalary <= singlesMedicareLevyThreshold ? 0 : annualSalary * medicareLevyRate;
 }
 
 //React JS calculator class
-class TaxCalculator extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSalaryInputChange = this.handleSalaryInputChange.bind(this);
-    this.handleTaxInputChange = this.handleTaxInputChange.bind(this);
-    this.handlePostTaxChange = this.handlePostTaxChange.bind(this);
-    this.handleFreqChange = this.handleFreqChange.bind(this);
+
+var TaxCalculator = function (_React$Component) {
+  _inherits(TaxCalculator, _React$Component);
+
+  function TaxCalculator(props) {
+    _classCallCheck(this, TaxCalculator);
+
+    var _this = _possibleConstructorReturn(this, (TaxCalculator.__proto__ || Object.getPrototypeOf(TaxCalculator)).call(this, props));
+
+    _this.handleSalaryInputChange = _this.handleSalaryInputChange.bind(_this);
+    _this.handleTaxInputChange = _this.handleTaxInputChange.bind(_this);
+    _this.handlePostTaxChange = _this.handlePostTaxChange.bind(_this);
+    _this.handleFreqChange = _this.handleFreqChange.bind(_this);
 
     var newTax = incomeTax(props.salary);
-    this.state = {
+    _this.state = {
       frequency: "Annual",
       salaryInput: props.salary,
       salary: props.salary,
@@ -155,254 +186,264 @@ class TaxCalculator extends React.Component {
       postTax: props.salary - incomeTax(props.salary) - props.salary * 0.02,
       postTaxInput: props.salary - incomeTax(props.salary) - props.salary * 0.02
     };
+    return _this;
   }
 
-  handleFreqChange(e) {
-    var newFrequency = e.target.value;
+  _createClass(TaxCalculator, [{
+    key: "handleFreqChange",
+    value: function handleFreqChange(e) {
+      var newFrequency = e.target.value;
 
-    var newSalaryInput = unAnnualiseSalary(this.state.salary, newFrequency);
-    var newTaxInput = Math.round(unAnnualiseSalary(incomeTax(this.state.salary), newFrequency));
-    var newMedicareLevy = medicareLevy(this.state.salary);
-    var newMedicareLevyInput = unAnnualiseSalary(newMedicareLevy, newFrequency);
-    var newPostTaxInput = newSalaryInput - newTaxInput - newMedicareLevyInput;
-    var newSuper = Math.round(this.state.salary * this.state.super_pct / 100);
-    this.setState({
-      salaryInput: Math.round(newSalaryInput),
-      taxInput: Math.round(newTaxInput),
-      postTaxInput: Math.round(newPostTaxInput),
-      frequency: newFrequency,
-      medicareLevyInput: newMedicareLevyInput,
-      superannuationInput: unAnnualiseSalary(newSuper, newFrequency)
-    });
-  }
-
-  handleSalaryInputChange(e) {
-    try {
-      var newSalaryInput = eval(e.target.value);
-    } catch (err) {
-      //do nothing
-      //console.log(err)
-    }
-    if (isFinite(newSalaryInput)) {
-      var newSalary = annualiseSalary(newSalaryInput, this.state.frequency);
-      var newTax = incomeTax(newSalary);
-      var newMedicareLevy = medicareLevy(newSalary);
-      var newPostTax = newSalary - newTax - newMedicareLevy;
-
-      var newTaxInput = Math.round(unAnnualiseSalary(newTax, this.state.frequency));
-      var newMedicareLevyInput = unAnnualiseSalary(newMedicareLevy, this.state.frequency);
+      var newSalaryInput = unAnnualiseSalary(this.state.salary, newFrequency);
+      var newTaxInput = Math.round(unAnnualiseSalary(incomeTax(this.state.salary), newFrequency));
+      var newMedicareLevy = medicareLevy(this.state.salary);
+      var newMedicareLevyInput = unAnnualiseSalary(newMedicareLevy, newFrequency);
       var newPostTaxInput = newSalaryInput - newTaxInput - newMedicareLevyInput;
-      var newSuper = Math.round(newSalary * this.state.super_pct / 100);
-
+      var newSuper = Math.round(this.state.salary * this.state.super_pct / 100);
       this.setState({
-        salary: Math.round(newSalary),
-        salaryInput: e.target.value,
-        tax: Math.round(newTax),
-        taxInput: newTaxInput,
-        postTax: Math.round(newPostTax),
-        postTaxInput: newPostTaxInput,
-        medicareLevy: Math.round(newMedicareLevy),
-        superannuation: newSuper,
+        salaryInput: Math.round(newSalaryInput),
+        taxInput: Math.round(newTaxInput),
+        postTaxInput: Math.round(newPostTaxInput),
+        frequency: newFrequency,
         medicareLevyInput: newMedicareLevyInput,
-        superannuationInput: unAnnualiseSalary(newSuper, this.state.frequency)
-      });
-    } else {
-      this.setState({
-        salaryInput: e.target.value
+        superannuationInput: unAnnualiseSalary(newSuper, newFrequency)
       });
     }
-  }
+  }, {
+    key: "handleSalaryInputChange",
+    value: function handleSalaryInputChange(e) {
+      try {
+        var newSalaryInput = eval(e.target.value);
+      } catch (err) {
+        //do nothing
+        //console.log(err)
+      }
+      if (isFinite(newSalaryInput)) {
+        var newSalary = annualiseSalary(newSalaryInput, this.state.frequency);
+        var newTax = incomeTax(newSalary);
+        var newMedicareLevy = medicareLevy(newSalary);
+        var newPostTax = newSalary - newTax - newMedicareLevy;
 
-  handleTaxInputChange(e) {
-    try {
-      var newTaxInput = eval(e.target.value);
-    } catch (err) {}
+        var newTaxInput = Math.round(unAnnualiseSalary(newTax, this.state.frequency));
+        var newMedicareLevyInput = unAnnualiseSalary(newMedicareLevy, this.state.frequency);
+        var newPostTaxInput = newSalaryInput - newTaxInput - newMedicareLevyInput;
+        var newSuper = Math.round(newSalary * this.state.super_pct / 100);
 
-    if (isFinite(newTaxInput)) {
-      var newTax = annualiseSalary(newTaxInput, this.state.frequency);
-      var newSalary = taxToSalary(newTax);
-      var newMedicareLevy = newSalary * 0.02;
-      var newPostTax = newSalary - newTax - newMedicareLevy;
-
-      var newSuper = Math.round(newSalary * this.state.super_pct / 100);
-
-      this.setState({
-        salary: Math.round(newSalary),
-        salaryInput: Math.round(unAnnualiseSalary(newSalary, this.state.frequency)),
-        tax: Math.round(newTax),
-        taxInput: e.target.value,
-        postTax: Math.round(newPostTax),
-        postTaxInput: Math.round(unAnnualiseSalary(newPostTax, this.state.frequency)),
-        medicareLevy: Math.round(newMedicareLevy),
-        superannuation: newSuper,
-        medicareLevyInput: unAnnualiseSalary(newMedicareLevy, this.state.frequency),
-        superannuationInput: unAnnualiseSalary(newSuper, this.state.frequency)
-      });
-    } else {
-      this.setState({ taxInput: e.target.value });
+        this.setState({
+          salary: Math.round(newSalary),
+          salaryInput: e.target.value,
+          tax: Math.round(newTax),
+          taxInput: newTaxInput,
+          postTax: Math.round(newPostTax),
+          postTaxInput: newPostTaxInput,
+          medicareLevy: Math.round(newMedicareLevy),
+          superannuation: newSuper,
+          medicareLevyInput: newMedicareLevyInput,
+          superannuationInput: unAnnualiseSalary(newSuper, this.state.frequency)
+        });
+      } else {
+        this.setState({
+          salaryInput: e.target.value
+        });
+      }
     }
-  }
+  }, {
+    key: "handleTaxInputChange",
+    value: function handleTaxInputChange(e) {
+      try {
+        var newTaxInput = eval(e.target.value);
+      } catch (err) {}
 
-  handlePostTaxChange(e) {
-    try {
-      var newPostTaxInput = eval(e.target.value);
-    } catch (err) {}
+      if (isFinite(newTaxInput)) {
+        var newTax = annualiseSalary(newTaxInput, this.state.frequency);
+        var newSalary = taxToSalary(newTax);
+        var newMedicareLevy = newSalary * 0.02;
+        var newPostTax = newSalary - newTax - newMedicareLevy;
 
-    if (isFinite(newPostTaxInput)) {
-      var newPostTax = annualiseSalary(newPostTaxInput, this.state.frequency);
-      var newSalary = postTaxToSalary(newPostTax);
-      var newTax = incomeTax(newSalary);
-      var newMedicareLevy = medicareLevy(newSalary);
-      var newSuper = Math.round(newSalary * this.state.super_pct / 100);
+        var newSuper = Math.round(newSalary * this.state.super_pct / 100);
 
-      this.setState({
-        salary: Math.round(newSalary),
-        tax: Math.round(newTax),
-        postTax: e.target.value,
-        medicareLevy: Math.round(newMedicareLevy),
-        superannuation: Math.round(newSalary * this.state.super_pct / 100),
-        salaryInput: Math.round(unAnnualiseSalary(newSalary, this.state.frequency)),
-        taxInput: Math.round(unAnnualiseSalary(newTax, this.state.frequency)),
-        postTaxInput: e.target.value,
-        medicareLevyInput: Math.round(unAnnualiseSalary(newMedicareLevy, this.state.frequency)),
-        superannuationInput: Math.round(unAnnualiseSalary(newSuper, this.state.frequency))
-      });
-    } else {
-      this.setState({ postTaxInput: e.target.value });
+        this.setState({
+          salary: Math.round(newSalary),
+          salaryInput: Math.round(unAnnualiseSalary(newSalary, this.state.frequency)),
+          tax: Math.round(newTax),
+          taxInput: e.target.value,
+          postTax: Math.round(newPostTax),
+          postTaxInput: Math.round(unAnnualiseSalary(newPostTax, this.state.frequency)),
+          medicareLevy: Math.round(newMedicareLevy),
+          superannuation: newSuper,
+          medicareLevyInput: unAnnualiseSalary(newMedicareLevy, this.state.frequency),
+          superannuationInput: unAnnualiseSalary(newSuper, this.state.frequency)
+        });
+      } else {
+        this.setState({ taxInput: e.target.value });
+      }
     }
-  }
+  }, {
+    key: "handlePostTaxChange",
+    value: function handlePostTaxChange(e) {
+      try {
+        var newPostTaxInput = eval(e.target.value);
+      } catch (err) {}
 
-  render() {
-    const salary = this.state.salary;
-    const tax = this.state.tax;
-    const medicareLevy = this.state.medicareLevy;
-    const superannuation = this.state.superannuation;
-    const super_pct = this.state.super_pct;
-    const postTax = this.state.postTax;
-    const salaryInput = this.state.salaryInput;
-    const taxInput = this.state.taxInput;
-    const postTaxInput = this.state.postTaxInput;
-    const medicareLevyInput = this.state.medicareLevyInput;
-    const superannuationInput = this.state.superannuationInput;
+      if (isFinite(newPostTaxInput)) {
+        var newPostTax = annualiseSalary(newPostTaxInput, this.state.frequency);
+        var newSalary = postTaxToSalary(newPostTax);
+        var newTax = incomeTax(newSalary);
+        var newMedicareLevy = medicareLevy(newSalary);
+        var newSuper = Math.round(newSalary * this.state.super_pct / 100);
 
-    return React.createElement(
-      "form",
-      null,
-      React.createElement(
-        "div",
-        { className: "row" },
+        this.setState({
+          salary: Math.round(newSalary),
+          tax: Math.round(newTax),
+          postTax: e.target.value,
+          medicareLevy: Math.round(newMedicareLevy),
+          superannuation: Math.round(newSalary * this.state.super_pct / 100),
+          salaryInput: Math.round(unAnnualiseSalary(newSalary, this.state.frequency)),
+          taxInput: Math.round(unAnnualiseSalary(newTax, this.state.frequency)),
+          postTaxInput: e.target.value,
+          medicareLevyInput: Math.round(unAnnualiseSalary(newMedicareLevy, this.state.frequency)),
+          superannuationInput: Math.round(unAnnualiseSalary(newSuper, this.state.frequency))
+        });
+      } else {
+        this.setState({ postTaxInput: e.target.value });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var salary = this.state.salary;
+      var tax = this.state.tax;
+      var medicareLevy = this.state.medicareLevy;
+      var superannuation = this.state.superannuation;
+      var super_pct = this.state.super_pct;
+      var postTax = this.state.postTax;
+      var salaryInput = this.state.salaryInput;
+      var taxInput = this.state.taxInput;
+      var postTaxInput = this.state.postTaxInput;
+      var medicareLevyInput = this.state.medicareLevyInput;
+      var superannuationInput = this.state.superannuationInput;
+
+      return React.createElement(
+        "form",
+        null,
         React.createElement(
           "div",
-          { className: "two columns" },
+          { className: "row" },
           React.createElement(
-            "label",
-            { htmlFor: "frequency" },
-            "Frequency"
+            "div",
+            { className: "two columns" },
+            React.createElement(
+              "label",
+              { htmlFor: "frequency" },
+              "Frequency"
+            ),
+            React.createElement(
+              "select",
+              { className: "u-full-width", id: "frequency", onChange: this.handleFreqChange },
+              React.createElement(
+                "option",
+                { value: "Annual" },
+                "Annual"
+              ),
+              React.createElement(
+                "option",
+                { value: "Monthly" },
+                "Monthly"
+              ),
+              React.createElement(
+                "option",
+                { value: "Fornightly" },
+                "Fornightly"
+              ),
+              React.createElement(
+                "option",
+                { value: "Weekly" },
+                "Weekly"
+              ),
+              React.createElement(
+                "option",
+                { value: "Day Rate" },
+                "Day Rate"
+              )
+            )
           ),
           React.createElement(
-            "select",
-            { className: "u-full-width", id: "frequency", onChange: this.handleFreqChange },
+            "div",
+            { className: "two columns" },
             React.createElement(
-              "option",
-              { value: "Annual" },
-              "Annual"
+              "label",
+              { htmlFor: "salaryInput" },
+              "Salary $",
+              Math.round(eval(salary)).toLocaleString(),
+              " "
+            ),
+            React.createElement("input", { className: "u-full-width", placeholder: Math.round(salaryInput), value: salaryInput, id: "salaryInput", onChange: this.handleSalaryInputChange })
+          ),
+          React.createElement(
+            "div",
+            { className: "two columns" },
+            React.createElement(
+              "label",
+              { htmlFor: "taxInput" },
+              "Tax $",
+              Math.round(eval(tax)).toLocaleString(),
+              " "
+            ),
+            React.createElement("input", { className: "u-full-width", placeholder: Math.round(tax), value: taxInput, id: "taxInput", onChange: this.handleTaxInputChange })
+          ),
+          React.createElement(
+            "div",
+            { className: "two columns" },
+            React.createElement(
+              "label",
+              { htmlFor: "afterTaxInput" },
+              "Post tax $",
+              Math.round(eval(postTax)).toLocaleString(),
+              " "
+            ),
+            React.createElement("input", { className: "u-full-width", value: postTaxInput, id: "afterTaxInput", onChange: this.handlePostTaxChange })
+          ),
+          React.createElement(
+            "div",
+            { className: "two columns" },
+            React.createElement(
+              "label",
+              { htmlFor: "medicareLevy_show" },
+              "Medicare Levy $",
+              medicareLevy
             ),
             React.createElement(
-              "option",
-              { value: "Monthly" },
-              "Monthly"
+              "div",
+              { id: "medicareLevy_show" },
+              Math.round(medicareLevyInput).toLocaleString()
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "two columns" },
+            React.createElement(
+              "label",
+              { htmlFor: "superannuation_show" },
+              "Superannuation $",
+              superannuation.toLocaleString(),
+              " @ ",
+              super_pct,
+              "% "
             ),
             React.createElement(
-              "option",
-              { value: "Fornightly" },
-              "Fornightly"
-            ),
-            React.createElement(
-              "option",
-              { value: "Weekly" },
-              "Weekly"
-            ),
-            React.createElement(
-              "option",
-              { value: "Day Rate" },
-              "Day Rate"
+              "div",
+              { id: "superannuation_show" },
+              Math.round(superannuationInput)
             )
           )
         ),
-        React.createElement(
-          "div",
-          { className: "two columns" },
-          React.createElement(
-            "label",
-            { htmlFor: "salaryInput" },
-            "Salary $",
-            Math.round(eval(salary)).toLocaleString(),
-            " "
-          ),
-          React.createElement("input", { className: "u-full-width", placeholder: Math.round(salaryInput), value: salaryInput, id: "salaryInput", onChange: this.handleSalaryInputChange })
-        ),
-        React.createElement(
-          "div",
-          { className: "two columns" },
-          React.createElement(
-            "label",
-            { htmlFor: "taxInput" },
-            "Tax $",
-            Math.round(eval(tax)).toLocaleString(),
-            " "
-          ),
-          React.createElement("input", { className: "u-full-width", placeholder: Math.round(tax), value: taxInput, id: "taxInput", onChange: this.handleTaxInputChange })
-        ),
-        React.createElement(
-          "div",
-          { className: "two columns" },
-          React.createElement(
-            "label",
-            { htmlFor: "afterTaxInput" },
-            "Post tax $",
-            Math.round(eval(postTax)).toLocaleString(),
-            " "
-          ),
-          React.createElement("input", { className: "u-full-width", value: postTaxInput, id: "afterTaxInput", onChange: this.handlePostTaxChange })
-        ),
-        React.createElement(
-          "div",
-          { className: "two columns" },
-          React.createElement(
-            "label",
-            { htmlFor: "medicareLevy_show" },
-            "Medicare Levy $",
-            medicareLevy
-          ),
-          React.createElement(
-            "div",
-            { id: "medicareLevy_show" },
-            Math.round(medicareLevyInput).toLocaleString()
-          )
-        ),
-        React.createElement(
-          "div",
-          { className: "two columns" },
-          React.createElement(
-            "label",
-            { htmlFor: "superannuation_show" },
-            "Superannuation $",
-            superannuation.toLocaleString(),
-            " @ ",
-            super_pct,
-            "% "
-          ),
-          React.createElement(
-            "div",
-            { id: "superannuation_show" },
-            Math.round(superannuationInput)
-          )
-        )
-      ),
-      React.createElement("div", { className: "row" })
-    );
-  }
-}
+        React.createElement("div", { className: "row" })
+      );
+    }
+  }]);
+
+  return TaxCalculator;
+}(React.Component);
 
 ReactDOM.render(React.createElement(
   "div",
