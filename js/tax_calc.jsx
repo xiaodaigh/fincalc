@@ -290,7 +290,6 @@ class TaxCalculator extends React.Component {
     return (
      <form> 
        	<div className="row">
-  			<div className="two columns">
   				<label htmlFor="frequency">Frequency</label>
   				<select className = "u-full-width" id="frequency" onChange = {this.handleFreqChange}>
   					<option value="Annual">Annual</option>
@@ -299,28 +298,18 @@ class TaxCalculator extends React.Component {
   					<option value="Weekly">Weekly</option>
   					<option value="Day Rate">Day Rate</option>
   				</select>		
-  			</div>
-  			<div className="two columns">
   				<label htmlFor="salaryInput">Salary ${Math.round(eval(salary)).toLocaleString()} </label>
-  				<input className = "u-full-width" placeholder={Math.round(salaryInput)} value = {salaryInput} id="salaryInput" onChange = {this.handleSalaryInputChange}/>
-  			</div>
+  				<input className = "u-full-width" value = {salaryInput} id="salaryInput" onChange = {this.handleSalaryInputChange}/>
   	
-  	      	<div className="two columns">
-  	      		<label htmlFor="taxInput">Tax ${Math.round(eval(tax)).toLocaleString()} </label>
-  				<input className = "u-full-width" placeholder={Math.round(tax)} value = {taxInput} id="taxInput" onChange = {this.handleTaxInputChange}/>
-  			</div>
-  			<div className="two columns">
-  	      		<label htmlFor="afterTaxInput">Post tax ${Math.round(eval(postTax)).toLocaleString()} </label>
+  	      <label htmlFor="taxInput">Tax ${Math.round(eval(tax)).toLocaleString()} </label>
+  				<input className = "u-full-width" value = {taxInput} id="taxInput" onChange = {this.handleTaxInputChange}/>
+
+  	      <label htmlFor="afterTaxInput">Post tax ${Math.round(eval(postTax)).toLocaleString()} </label>
   				<input className = "u-full-width" value = {postTaxInput} id="afterTaxInput" onChange = {this.handlePostTaxChange}/>
-  	      	</div>
-  	      	<div className="two columns">
   	      		<label htmlFor="medicareLevy_show">Medicare Levy ${medicareLevy}</label>
   	      		<div id = "medicareLevy_show">{Math.round(medicareLevyInput).toLocaleString()}</div>
-  	      	</div>
-  			<div className="two columns">
   	      		<label htmlFor="superannuation_show">Superannuation ${superannuation.toLocaleString()} @ {super_pct}% </label>
   	      		<div id = "superannuation_show">{Math.round(superannuationInput)}</div>
-  	      	</div>
   		</div>
 	</form>
       );
@@ -328,20 +317,21 @@ class TaxCalculator extends React.Component {
 }
 
 ReactDOM.render(
+
 	<div className = "container">
-    <div className = "six columns">
-    	<div className = "row">
+    	<div className = "row four columns thindarkborder">
     		<h5> Calculation 1</h5>
     	  <TaxCalculator salary = "78000" super_pct = "9.5"/> 
       </div>
-    </div>
 
-    <div className = "six columns">
-      <div className = "row">
+      <div className = "row four columns thindarkborder">
       	<h5> Calculation 2</h5>
       	<TaxCalculator  salary = "65000" super_pct = "9.5"/>
     	</div>
-    </div>
+      <div className = "row four columns thindarkborder">
+        <h5> Calculation 3</h5>
+        <TaxCalculator  salary = "52000" super_pct = "9.5"/>
+      </div>
   </div>
   ,
 		document.getElementById('root')

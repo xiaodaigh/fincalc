@@ -5,29 +5,53 @@
     <meta charset="UTF-8" />
     <title>Simple Australian Pay & Tax Calculator</title>
     <!-- Mobile Specific Metas
-	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- FONT
-	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
     <!-- CSS
-	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
     <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
     <link rel="stylesheet" href="css/custom.css">
     <!-- Favicon
-	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="Skeleton-2.0.4/image/png" href="Skeleton-2.0.4/images/favicon.png">
     <!-- React
-	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <!-- <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script> -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="js/site.js"></script>
-    <!--     <script src="js/react.js"></script>
-    <script src="js/react-dom.js"></script>
-    <script src="js/babel.min.js"></script> -->
+    <!--  <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>  -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-23361439-2', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <style>
+    .thindarkborder {
+            border-width: thin;
+            border-spacing: 2px;
+            border-style: dotted;
+            border-color: black;
+            padding: 10px;
+    }
+    </style>
 </head>
 
 <body>
@@ -64,7 +88,7 @@
     <div class="docs-section" id="calculator">
         <div id="root"></div>
         <!-- load the javascript code as soon as the root element is loaded for optimal responsiveness -->
-        <script type="text/babel" src="js/tax_calc.jsx"></script>
+        <script src="dist/tax_calc.js"></script>
     </div>
     <div class="docs-section" id="explanation">
         <div class="docs-section" id="explainHow">
@@ -150,7 +174,7 @@
         </div>
     </div>
     <br/> © 2017 AnalytixWare Pty Ltd
-    <script type="text/babel" src="js/tax_calc.jsx"></script>
+    <!-- <script type="text/babel" src="js/tax_calc.jsx"></script> -->
 </body>
 
 </html>
