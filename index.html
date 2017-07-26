@@ -45,11 +45,11 @@
     </script>
     <style>
     .thindarkborder {
-            border-width: thin;
-            border-spacing: 2px;
-            border-style: dotted;
-            border-color: black;
-            padding: 10px;
+        border-width: thin;
+        border-spacing: 2px;
+        border-style: dotted;
+        border-color: black;
+        padding: 10px;
     }
     </style>
 </head>
@@ -173,6 +173,24 @@
             <br/> To convert her take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely
         </div>
     </div>
+    <a id="worktest">Testing a worker</a>
+    <script>
+    console.log("testing worker")
+    if (window.Worker) {
+        console.log("has worker")
+        myWorker = new Worker('workertest/worker_test.js');
+
+        document.getElementById("worktest").onclick = function(e) {
+            console.log(e)
+            myWorker.postMessage("main script msg")
+        }
+
+        myWorker.onmessage = function(e) {
+            console.log("message from worker: " + e.data)
+        }
+
+    }
+    </script>
     <br/> © 2017 AnalytixWare Pty Ltd
     <!-- <script type="text/babel" src="js/tax_calc.jsx"></script> -->
 </body>
