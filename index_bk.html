@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Simple Australian Pay & Tax Calculator</title>
+    <!-- Mobile Specific Metas
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- FONT
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- CSS
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
+    <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="Skeleton-2.0.4/image/png" href="Skeleton-2.0.4/images/favicon.png">
+    <!-- React
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <!-- <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/site.js"></script>
+    <!--  <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>  -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-23361439-2', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <style>
+    .thindarkborder {
+        border-width: thin;
+        border-spacing: 2px;
+        border-style: dotted;
+        border-color: black;
+        padding: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="navbar-list">
+                <li class="navbar-item"><a class="navbar-link" href="#intro">Intro</a></li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="#calculator">Calculator</a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" data-popover="#explainationPopOver" href="#explanation">Explanation</a>
+                    <div id="explainationPopOver" class="popover">
+                        <ul class="popover-list">
+                            <li class="popover-item">
+                                <a class="popover-link" href="#explainHow">How is tax calculated?</a>
+                            </li>
+                            <li class="popover-item">
+                                <a class="popover-link" href="#explainExample">Example</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="mailto:dzj@analytixware.com">Email us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="docs-section" id="intro">
+        <h4>Australian Simple Tax & Pay Calculator</h4> This fast and accurate calculator helps you work out how much you will get paid and how much tax you will pay. It is however not a comprehensive calculator and you may want to visit the Australian Tax Office website (ato.gov.au) for more information.
+    </div>
+    <div class="docs-section" id="calculator">
+        <div id="root"></div>
+        <!-- load the javascript code as soon as the root element is loaded for optimal responsiveness -->
+        <script src="dist/tax_calc.js"></script>
+    </div>
+    <div class="docs-section" id="explanation">
+        <div class="docs-section" id="explainHow">
+            <h4>How is your tax calculated?</h4> As an individual the amount of tax you pay can be summarised with this equation
+            <br/>
+            <div class="row">
+                <div class="offset-by-two eight columns">
+                    Total Tax = Income Tax + Medicare Levy
+                </div>
+            </div>
+            <br/> Medicare Levy is simply 2% of your Taxable Income unless your income is below a certain threshold (for details visit <a href="https://www.ato.gov.au/General/New-legislation/In-detail/Direct-taxes/Income-tax-for-individuals/Increasing-the-Medicare-Levy-low-income-thresholds/">this link</a>) in which case you don't have to pay a Medicare Levy. Income tax on the other hands follows a so called "progressive" system. In a progressive system income tax are calculated based on brackets and income within each bracket is taxed at a different rate. Of course the higher the income the higher the tax rate, hence the name progressive. The rate at which each bracket is charged at is called the marginal rate.
+            <br/>
+            <div class="row">
+                <div class="offset-by-two eight columns">
+                    Income Tax = Total Previous Bracket Tax + (Taxable Income - Last Bracket Threshold) * Marginal Rate
+                </div>
+            </div>
+            <br/> The below is the Australian income tax rates for the financial year 2017/2018 (i.e. Jul 2017 to Jun 2018).
+            <div class="container">
+                <div class="row">
+                    <table class="u-full-width">
+                        <thead>
+                            <tr>
+                                <th>Income Tax Bracket</th>
+                                <th>Marginal rate</th>
+                                <th>Total Previous Bracket Tax</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$0 - $18,000</td>
+                                <td>0%</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>$18,001 - $37,000</td>
+                                <td>19%</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>$37,001 - $87,000</td>
+                                <td>32.5%</td>
+                                <td>$3,572</td>
+                            </tr>
+                            <tr>
+                                <td>$87,001 - $180,000</td>
+                                <td>37%</td>
+                                <td>$19,822</td>
+                            </tr>
+                            <tr>
+                                <td>$180,001 - Infinity</td>
+                                <td>45%</td>
+                                <td>$54,232</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="docs-section" id="explainExample">
+            <h4>Tax & Pay Calculation Explained via an example</h4> Consider someone with a taxable income of $78,000. Her income falls into the third bracket, the last bracket threshold is $37,000, and her marginal rate is 32.5% i.e. every dollar that she earns above $37,000 is taxed at 32.5%. But how much tax does she pay for her earnings below $37,000? That is the "Total Previous Bracket Tax" which is $3,572. Bringing everything togehter and her income tax is calculated as
+            <br/>
+            <div class="row">
+                <div class="offset-by-two eight columns">
+                    Income Tax = $16,897 = $3,572 + ($78,000 - $37,000) * 32.5%
+                </div>
+            </div>
+            <br/> To work out her take home pay she would need to
+            <br/>
+            <div class="row">
+                <div class="offset-by-two eight columns">
+                    Take Home Pay = Taxable Income - Income Tax - Medicare Levy
+                </div>
+            </div>
+            <br/> therefore
+            <br/>
+            <div class="row">
+                <div class="offset-by-two eight columns">
+                    Take Home Pay = $59,543 = $78,000 - $16,897 - $78,000 * 2.5%
+                </div>
+            </div>
+            <br/> To convert her take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely
+        </div>
+    </div>
+    <a id="worktest">Testing a worker</a>
+    <script>
+    console.log("testing worker")
+    if (window.Worker) {
+        console.log("has worker")
+        myWorker = new Worker('workertest/worker_test.js');
+
+        document.getElementById("worktest").onclick = function(e) {
+            console.log(e)
+            myWorker.postMessage("main script msg")
+        }
+
+        myWorker.onmessage = function(e) {
+            console.log("message from worker: " + e.data)
+        }
+
+    }
+    </script>
+    <br/> © 2017 AnalytixWare Pty Ltd
+    <!-- <script type="text/babel" src="js/tax_calc.jsx"></script> -->
+</body>
+
+</html>

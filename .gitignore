@@ -2,3 +2,6 @@
 *.exe
 *.exe~
 /node_modules
+*.db
+*.sublime-project
+*.sublime-workspace

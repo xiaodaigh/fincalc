@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
+    <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <!-- <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <script  src="js/site.js"></script> -->
+    <!--  <script src="js/react-dom.js"></script>
+	    <script src="js/babel.min.js"></script>  -->
+    <div id="root"></div>
+    <!-- load the javascript code as soon as the root element is loaded for optimal responsiveness -->
+    <script src="dist/tax_calc.js"></script>
+    <script type="text/javascript">
+    window.parent.postMessage({
+        sentinel: 'amp',
+        type: 'embed-size',
+        height: 100
+    }, '*');
+    </script>
+</body>
+
+</html>
