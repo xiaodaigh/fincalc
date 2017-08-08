@@ -64,7 +64,7 @@
                     <a class="navbar-link" href="#calculator">Calculator</a>
                 </li>
                 <li class="navbar-item">
-                    <a class="navbar-link" data-popover="#explainationPopOver" href="#explanation">Explanation</a>
+                    <a class="navbar-link" data-popover="#explainationPopOver" href="#explainHow">Explanation</a>
                     <div id="explainationPopOver" class="popover">
                         <ul class="popover-list">
                             <li class="popover-item">
@@ -90,89 +90,87 @@
         <!-- load the javascript code as soon as the root element is loaded for optimal responsiveness -->
         <script src="dist/tax_calc.js"></script>
     </div>
-    
-        <div class="docs-section" id="explainHow">
-            <h4>How is your tax calculated?</h4> As an individual the amount of tax you pay can be summarised with this equation
-            <br/>
-            <div class="row">
-                <div class="offset-by-two eight columns">
-                    Total Tax = Income Tax + Medicare Levy
-                </div>
-            </div>
-            <br/> Medicare Levy is simply 2% of your Taxable Income unless your income is below a certain threshold (for details visit <a href="https://www.ato.gov.au/General/New-legislation/In-detail/Direct-taxes/Income-tax-for-individuals/Increasing-the-Medicare-Levy-low-income-thresholds/">this link</a>) in which case you don't have to pay a Medicare Levy. Income tax on the other hands follows a so called "progressive" system. In a progressive system income tax are calculated based on brackets and income within each bracket is taxed at a different rate. Of course the higher the income the higher the tax rate, hence the name progressive. The rate at which each bracket is charged at is called the marginal rate.
-            <br/>
-            <div class="row">
-                <div class="offset-by-two eight columns">
-                    Income Tax = Total Previous Bracket Tax + (Taxable Income - Last Bracket Threshold) * Marginal Rate
-                </div>
-            </div>
-            <br/> The below is the Australian income tax rates for the financial year 2017/2018 (i.e. Jul 2017 to Jun 2018).
-            <div class="container">
-                <div class="row">
-                    <table class="u-full-width">
-                        <thead>
-                            <tr>
-                                <th>Income Tax Bracket</th>
-                                <th>Marginal rate</th>
-                                <th>Total Previous Bracket Tax</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>$0 - $18,000</td>
-                                <td>0%</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>$18,001 - $37,000</td>
-                                <td>19%</td>
-                                <td>$0</td>
-                            </tr>
-                            <tr>
-                                <td>$37,001 - $87,000</td>
-                                <td>32.5%</td>
-                                <td>$3,572</td>
-                            </tr>
-                            <tr>
-                                <td>$87,001 - $180,000</td>
-                                <td>37%</td>
-                                <td>$19,822</td>
-                            </tr>
-                            <tr>
-                                <td>$180,001 - Infinity</td>
-                                <td>45%</td>
-                                <td>$54,232</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <div class="docs-section" id="explainHow">
+        <h4>How is your tax calculated?</h4> As an individual the amount of tax you pay can be summarised with this equation
+        <br/>
+        <div class="row">
+            <div class="offset-by-two eight columns">
+                Total Tax = Income Tax + Medicare Levy
             </div>
         </div>
-        <div class="docs-section" id="explainExample">
-            <h4>Tax & Pay Calculation Explained via an example</h4> Consider someone with a taxable income of $78,000. Her income falls into the third bracket, the last bracket threshold is $37,000, and her marginal rate is 32.5% i.e. every dollar that she earns above $37,000 is taxed at 32.5%. But how much tax does she pay for her earnings below $37,000? That is the "Total Previous Bracket Tax" which is $3,572. Bringing everything togehter and her income tax is calculated as
-            <br/>
-            <div class="row">
-                <div class="offset-by-two eight columns">
-                    Income Tax = $16,897 = $3,572 + ($78,000 - $37,000) * 32.5%
-                </div>
+        <br/> Medicare Levy is simply 2% of your Taxable Income unless your income is below a certain threshold (for details visit <a href="https://www.ato.gov.au/General/New-legislation/In-detail/Direct-taxes/Income-tax-for-individuals/Increasing-the-Medicare-Levy-low-income-thresholds/">this link</a>) in which case you don't have to pay a Medicare Levy. Income tax on the other hands follows a so called "progressive" system. In a progressive system income tax are calculated based on brackets and income within each bracket is taxed at a different rate. Of course the higher the income the higher the tax rate, hence the name progressive. The rate at which each bracket is charged at is called the marginal rate.
+        <br/>
+        <div class="row">
+            <div class="offset-by-two eight columns">
+                Income Tax = Total Previous Bracket Tax + (Taxable Income - Last Bracket Threshold) * Marginal Rate
             </div>
-            <br/> To work out her take home pay she would need to
-            <br/>
-            <div class="row">
-                <div class="offset-by-two eight columns">
-                    Take Home Pay = Taxable Income - Income Tax - Medicare Levy
-                </div>
-            </div>
-            <br/> therefore
-            <br/>
-            <div class="row">
-                <div class="offset-by-two eight columns">
-                    Take Home Pay = $59,543 = $78,000 - $16,897 - $78,000 * 2.5%
-                </div>
-            </div>
-            <br/> To convert her take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely
         </div>
-    
+        <br/> The below is the Australian income tax rates for the financial year 2017/2018 (i.e. Jul 2017 to Jun 2018).
+        <div class="container">
+            <div class="row">
+                <table class="u-full-width">
+                    <thead>
+                        <tr>
+                            <th>Income Tax Bracket</th>
+                            <th>Marginal rate</th>
+                            <th>Total Previous Bracket Tax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$0 - $18,000</td>
+                            <td>0%</td>
+                            <td>NA</td>
+                        </tr>
+                        <tr>
+                            <td>$18,001 - $37,000</td>
+                            <td>19%</td>
+                            <td>$0</td>
+                        </tr>
+                        <tr>
+                            <td>$37,001 - $87,000</td>
+                            <td>32.5%</td>
+                            <td>$3,572</td>
+                        </tr>
+                        <tr>
+                            <td>$87,001 - $180,000</td>
+                            <td>37%</td>
+                            <td>$19,822</td>
+                        </tr>
+                        <tr>
+                            <td>$180,001 - Infinity</td>
+                            <td>45%</td>
+                            <td>$54,232</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="docs-section" id="explainExample">
+        <h4>Tax & Pay Calculation Explained via an example</h4> Consider someone with a taxable income of $78,000. Her income falls into the third bracket, the last bracket threshold is $37,000, and her marginal rate is 32.5% i.e. every dollar that she earns above $37,000 is taxed at 32.5%. But how much tax does she pay for her earnings below $37,000? That is the "Total Previous Bracket Tax" which is $3,572. Bringing everything togehter and her income tax is calculated as
+        <br/>
+        <div class="row">
+            <div class="offset-by-two eight columns">
+                Income Tax = $16,897 = $3,572 + ($78,000 - $37,000) * 32.5%
+            </div>
+        </div>
+        <br/> To work out her take home pay she would need to
+        <br/>
+        <div class="row">
+            <div class="offset-by-two eight columns">
+                Take Home Pay = Taxable Income - Income Tax - Medicare Levy
+            </div>
+        </div>
+        <br/> therefore
+        <br/>
+        <div class="row">
+            <div class="offset-by-two eight columns">
+                Take Home Pay = $59,543 = $78,000 - $16,897 - $78,000 * 2.5%
+            </div>
+        </div>
+        <br/> To convert her take home pay to monthly, fornight, or weekly amounts, simply divided it by 12, 26, or 52 respecitvely
+    </div>
     <a id="worktest">Testing a worker</a>
     <script>
     console.log("testing worker")
