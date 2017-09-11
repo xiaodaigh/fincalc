@@ -3,6 +3,7 @@
 var CACHE_NAME = 'fincalc-cache-v1';
 var urlsToCache = [
   '/',
+  '/sw.js',
   '/Skeleton-2.0.4/css/normalize.css',
   '/Skeleton-2.0.4/css/skeleton.css',
   '/css/custom.css',
@@ -17,7 +18,7 @@ var urlsToCache = [
   "/images/apple-touch-icon-144x144.png",
   "/dist/tax_calc.js",
   "/dist/react.js",
-  "/dist/react-dom.js"
+  "/dist/react-dom.js",
   "/js/site.js"
 ];
 
