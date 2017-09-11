@@ -1,0 +1,36 @@
+{
+  "name": "fincalc.com.au",
+  "short_name": "fincalc",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Money made simple",
+  "icons": [{
+    "src": "images/Logaster-1-facebook-profile.png",
+    "sizes": "180x180",
+    "type": "image/png"
+  },{
+    "src": "images/Logaster-1-gplus-profile-250px.png",
+    "sizes": "250x250",
+    "type": "image/png"
+  },{
+    "src": "images/Logaster-1-gplus-sharedLink-150px.png",
+    "sizes": "150x150",
+    "type": "image/png"
+  },{
+    "src": "images/Logaster-1-instagram-profile-110px",
+    "sizes": "110x110",
+    "type": "image/png"
+  },{
+    "src": "images/Logaster-1-instagram-sharedImage-1080px",
+    "sizes": "1080x1080",
+    "type": "image/png"
+  },{
+    "src": "images/Logaster-1-twitter-profile-400px.png",
+    "sizes": "400x400",
+    "type": "image/png"
+  }],
+  "related_applications": [{
+    "platform": "web"
+  }]
+}
