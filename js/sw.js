@@ -7,7 +7,7 @@ var urlsToCache = [
   '/Skeleton-2.0.4/css/skeleton.css',
   '/css/custom.css',
   '/css/googleapifont.css',
-  '/images/favicon-192x192.icon',
+  '/images/favicon-192x192.png',
   '/dist/site.js',
   "/images/apple-touch-icon-57x57.png",
   "/images/apple-touch-icon-60x60.png",
@@ -15,7 +15,9 @@ var urlsToCache = [
   "/images/apple-touch-icon-114x114.png",
   "/images/apple-touch-icon-144x144.png",
   "/dist/tax_calc.js",
-  "/dist/react.js"
+  "/dist/react.js",
+  "/dist/react-dom.js",
+  "/dist/jquery.min.js",
 ];
 
 self.addEventListener('install', function(event) {
