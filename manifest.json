@@ -1,7 +1,7 @@
 {
   "name": "fincalc.com.au",
   "short_name": "fincalc",
-  "start_url": ".",
+  "start_url": "./?hs=true",
   "display": "standalone",
   "background_color": "#fff",
   "description": "Money made simple",
