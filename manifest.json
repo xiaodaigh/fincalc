@@ -2,8 +2,6 @@
   "name": "fincalc.com.au",
   "short_name": "fincalc",
   "start_url": "./?hs=true",
-  "display": "standalone",
-  "background_color": "#fff",
   "description": "Money made simple",
   "icons": [{
     "src": "images/Logaster-1-facebook-profile.png",
@@ -30,6 +28,9 @@
     "sizes": "400x400",
     "type": "image/png"
   }],
+  "background_color": "white",
+  "theme_color": "white", 
+  "display": "standalone", 
   "related_applications": [{
     "platform": "web"
   }]
