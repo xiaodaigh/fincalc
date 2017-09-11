@@ -23,6 +23,7 @@
   <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
   <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
   <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png" />
+  <link rel="manifest" href="/manifest.json">
   <!-- React
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="/dist/react.js"></script>
@@ -164,7 +165,7 @@
   <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/dist/sw.js').then(function(registration) {
+      navigator.serviceWorker.register('/sw.js').then(function(registration) {
         // Registration was successful
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
       }, function(err) {
