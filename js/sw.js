@@ -8,6 +8,7 @@ var urlsToCache = [
   '/css/custom.css',
   '/css/googleapifont.css',
   '/images/favicon-192x192.png',
+  "/dist/jquery.min.js",
   '/dist/site.js',
   "/images/apple-touch-icon-57x57.png",
   "/images/apple-touch-icon-60x60.png",
@@ -16,8 +17,8 @@ var urlsToCache = [
   "/images/apple-touch-icon-144x144.png",
   "/dist/tax_calc.js",
   "/dist/react.js",
-  "/dist/react-dom.js",
-  "/dist/jquery.min.js",
+  "/dist/react-dom.js"
+  "/js/site.js"
 ];
 
 self.addEventListener('install', function(event) {
