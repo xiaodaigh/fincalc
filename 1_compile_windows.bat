@@ -1,2 +1,2 @@
-copy .\dist\sw.js sw.js
+copy .\js\sw.js sw.js
 pause
